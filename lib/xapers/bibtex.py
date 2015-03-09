@@ -90,7 +90,7 @@ class Bibentry():
         # clean the strings first
         fields = {}
         for field in bibfields:
-            fields[field] = unicode(clean_bib_string(bibfields[field]))
+            fields[field.lower()] = unicode(clean_bib_string(bibfields[field]))
         return fields
 
     def set_file(self, path):
