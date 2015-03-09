@@ -136,7 +136,7 @@ def print_doc_summary(doc):
 
 ############################################################
 
-def add(db, query_string, infile=None, sid=None, tags=None, prompt=False):
+def add(db, query_string, infile=None, sid=None, tags=None, prompt=False, move=False):
 
     doc = None
     bibtex = None
@@ -310,6 +310,9 @@ def add(db, query_string, infile=None, sid=None, tags=None, prompt=False):
         raise
 
     print_doc_summary(doc)
+    if move:
+        print >>sys.stderr, "Deleting original file.\n",
+        os.unlink(infile)
     return doc.docid
 
 ############################################

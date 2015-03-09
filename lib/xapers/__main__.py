@@ -45,6 +45,7 @@ Commands:
     --file[=<file>]                     PDF file to index and archive
     --tags=<tag>[,...]                  initial tags
     --prompt                            prompt for unspecified options
+    --move                              delete the original file went done
     --view                              view entry after adding
   import <bibtex-file>                Import entries from a bibtex database.
     --tags=<tag>[,...]                  tags to apply to all imported documents
@@ -163,6 +164,7 @@ if __name__ == '__main__':
         prompt = False
         view = False
         query = None
+        move = False
 
         argc = 2
         while True:
@@ -177,6 +179,8 @@ if __name__ == '__main__':
                     infile = True
             elif '--tags=' in sys.argv[argc]:
                 tags = sys.argv[argc].split('=',1)[1].split(',')
+            elif '--move' in sys.argv[argc]:
+                move = True
             elif '--prompt' in sys.argv[argc]:
                 prompt = True
             elif '--view' in sys.argv[argc]:
@@ -189,7 +193,7 @@ if __name__ == '__main__':
             query = make_query_string(sys.argv[argc:])
 
         with cli.initdb(writable=True, create=True) as db:
-            docid = cli.add(db, query, infile=infile, sid=sid, tags=tags, prompt=prompt)
+            docid = cli.add(db, query, infile=infile, sid=sid, tags=tags, prompt=prompt, move=move)
 
         if view and docid:
             nci = import_nci()
