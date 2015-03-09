@@ -6,6 +6,10 @@ import shlex
 
 description = "Launch external program to get the bibtex"
 
+url_format = 'exec:%s'
+
+url = "exec"
+
 def fetch_bibtex(id):
     p = subprocess.Popen(shlex.split(id), stdout=subprocess.PIPE)
     p.wait()
