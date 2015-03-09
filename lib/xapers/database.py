@@ -59,7 +59,7 @@ class Database():
         # FIXME: use this for doc mime type
         'type': 'T',
         }
-            
+
     BOOLEAN_PREFIX_EXTERNAL = {
         'id': 'Q',
         'key': 'XBIB|',
@@ -111,7 +111,7 @@ class Database():
         self.root = os.path.abspath(os.path.expanduser(root))
 
         # xapers db directory
-        xapers_path = os.path.join(self.root, '.xapers')
+        xapers_path = os.path.join(self.root, os.environ.get('XAPERS_PATH', '.xapers'))
 
         # xapes directory initialization
         if not os.path.exists(xapers_path):
@@ -325,7 +325,7 @@ class Database():
         docdirs = os.listdir(self.root)
         docdirs.sort()
         for ddir in docdirs:
-            if ddir == '.xapers':
+            if ddir == os.environ.get('XAPERS_PATH', '.xapers'):
                 continue
             docdir = os.path.join(self.root, ddir)
             if not os.path.isdir(docdir):
