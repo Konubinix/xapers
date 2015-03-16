@@ -149,7 +149,7 @@ class DocWalker(urwid.ListWalker):
 
     def prev_position(self, pos):
         return pos - 1
-        
+
 ############################################################
 
 class Search(urwid.WidgetWrap):
@@ -188,6 +188,7 @@ class Search(urwid.WidgetWrap):
         ('meta f', "copyPath"),
         ('meta u', "copyURL"),
         ('meta b', "copyBibtex"),
+        ('meta k', "copyKey"),
         ])
 
     def __init__(self, ui, query=None):
@@ -349,6 +350,14 @@ class Search(urwid.WidgetWrap):
             return
         xclip(bibtex, isfile=True)
         self.ui.set_status('yanked bibtex: %s' % bibtex)
+
+    def copyKey(self):
+        """copy document key (bibtex ID) to clipboard"""
+        entry = self.listbox.get_focus()[0]
+        if not entry: return
+        key = entry.doc.get_key()
+        xclip(key)
+        self.ui.set_status('yanked key: %s' % key)
 
     def addTags(self):
         """add tags to document (space separated)"""
